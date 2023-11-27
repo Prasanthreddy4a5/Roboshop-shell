@@ -5,7 +5,7 @@ dnf module disable nodejs -y
 dnf module enable nodejs:18 -y
 dnf install nodejs -y
 
-cartadd roboshop
+useradd roboshop roboshop
 rm -rf /app
 mkdir /app
 cd /app
