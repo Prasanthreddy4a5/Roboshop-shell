@@ -36,10 +36,11 @@ func_nodejs() {
   cp mongo.repo /etc/yum.repos.d/mongo.repo &>>${log}
 
   echo -e "\e[36m>>>>>>>>>>>>  Install NodeJS Repos  <<<<<<<<<<<<\e[0m"
-  curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log}
+  dnf module disable nodejs -y &>>${log}
+  dnf module enable nodejs:18 -y &>>${log}
 
   echo -e "\e[36m>>>>>>>>>>>>  Install NodeJS  <<<<<<<<<<<<\e[0m"
-  yum install nodejs -y &>>${log}
+  dnf install nodejs -y -y &>>${log}
 
   func_apppreq
 
@@ -47,7 +48,7 @@ func_nodejs() {
   npm install &>>${log}
 
   echo -e "\e[36m>>>>>>>>>>>>  INstall Mongo Client  <<<<<<<<<<<<\e[0m"  | tee -a /tmp/roboshop.log
-  yum install mongodb-org-shell -y &>>${log}
+  dnf install mongodb-org-shell -y &>>${log}
 
   echo -e "\e[36m>>>>>>>>>>>>  Load User Schema  <<<<<<<<<<<<\e[0m"  | tee -a /tmp/roboshop.log
   mongo --host mongodb.prashdevops.online </app/schema/${component}.js &>>${log}
@@ -57,7 +58,7 @@ func_nodejs() {
 
 func_java() {
   echo -e "\e[36m>>>>>>>>>>>>  Install Maven   <<<<<<<<<<<<\e[0m"
-  yum install maven -y &>>${log}
+  dnf install maven -y &>>${log}
 
   func_apppreq
 
@@ -66,7 +67,7 @@ func_java() {
   mv target/${component}-1.0.jar ${component}.jar &>>${log}
 
   echo -e "\e[36m>>>>>>>>>>>>  Install MySQL Client   <<<<<<<<<<<<\e[0m"
-  yum install mysql -y &>>${log}
+  dnf install mysql -y  &>>${log}
 
   echo -e "\e[36m>>>>>>>>>>>>  Load Schema   <<<<<<<<<<<<\e[0m"
   mysql -h mysql.prashdevops.online -uroot -pRoboShop@1 < /app/schema/${component}.sql &>>${log}
@@ -76,7 +77,7 @@ func_java() {
 
 func_python() {
   echo -e "\e[36m>>>>>>>>>>>>  Build ${component} Service   <<<<<<<<<<<<\e[0m"
-  yum install python36 gcc python3-devel -y &>>${log}
+  dnf install python36 gcc python3-devel -y &>>${log}
 
   func_apppreq
 
