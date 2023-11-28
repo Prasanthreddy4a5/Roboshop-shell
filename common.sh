@@ -50,7 +50,7 @@ func_nodejs() {
   yum install mongodb-org-shell -y &>>${log}
 
   echo -e "\e[36m>>>>>>>>>>>>  Load User Schema  <<<<<<<<<<<<\e[0m"  | tee -a /tmp/roboshop.log
-  mongo --host mongodb.rdevopsb72.online </app/schema/${component}.js &>>${log}
+  mongo --host mongodb.prashdevops.online </app/schema/${component}.js &>>${log}
 
   func_systemd
 }
@@ -69,7 +69,7 @@ func_java() {
   yum install mysql -y &>>${log}
 
   echo -e "\e[36m>>>>>>>>>>>>  Load Schema   <<<<<<<<<<<<\e[0m"
-  mysql -h mysql.rdevopsb72.online -uroot -pRoboShop@1 < /app/schema/${component}.sql &>>${log}
+  mysql -h mysql.prashdevops.online -uroot -pRoboShop@1 < /app/schema/${component}.sql &>>${log}
 
   func_systemd
 }
