@@ -1,4 +1,4 @@
-set -x
+#set -x
 dnf install nginx -y
 cp nginx-roboshop.conf /etc/nginx/default.d/roboshop.conf
 
