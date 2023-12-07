@@ -9,6 +9,7 @@ func_exit_status() {
 }
 
 
+
 func_apppreq() {
   echo -e "\e[36m>>>>>>>>>>>>  Create ${component} Service  <<<<<<<<<<<<\e[0m"
   cp ${component}.service /etc/systemd/system/${component}.service &>>${log}
@@ -43,6 +44,7 @@ func_apppreq() {
 }
 
 
+
 func_systemd() {
   echo -e "\e[36m>>>>>>>>>>>>  Start ${component} Service  <<<<<<<<<<<<\e[0m"  | tee -a /tmp/roboshop.log
   systemctl daemon-reload &>>${log}
@@ -50,6 +52,7 @@ func_systemd() {
   systemctl restart ${component} &>>${log}
   func_exit_status
 }
+
 
 
  func_schema_setup()  {
@@ -71,8 +74,10 @@ func_systemd() {
   echo -e "\e[36m>>>>>>>>>>>>  Load Schema   <<<<<<<<<<<<\e[0m"
   mysql -h mysql.prashdevops.online -uroot -pRoboShop@1 < /app/schema/${component}.sql &>>${log}
   func_exit_status
+  fi
  }
  
+
 
 func_nodejs() {
   log=/tmp/roboshop.log
@@ -99,6 +104,7 @@ func_nodejs() {
 
 
 
+
 func_java() {
   echo -e "\e[36m>>>>>>>>>>>>  Install Maven   <<<<<<<<<<<<\e[0m"
   dnf install maven -y &>>${log}
@@ -110,11 +116,11 @@ func_java() {
   mvn clean package &>>${log}
   mv target/${component}-1.0.jar ${component}.jar &>>${log}
   func_exit_status
-
   func_schema_setup
-
   func_systemd
+  
 }
+
 
 
 
@@ -130,5 +136,6 @@ func_python() {
   func_exit_status
 
   func_systemd
+  
 }
 
