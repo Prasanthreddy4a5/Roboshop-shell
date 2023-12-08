@@ -1,3 +1,4 @@
+set -e
 component=cart
 source common.sh
 
